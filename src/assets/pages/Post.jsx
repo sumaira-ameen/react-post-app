@@ -1,75 +1,7 @@
-// import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-// import Card from 'react-bootstrap/Card';
-// // import Button from 'react-bootstrap/Button';
 
-// const Post = () => {
-//     const queryClient = useQueryClient()
-//     const {data} = useQuery({
-//         queryKey: ['posts'],
-//         queryFn: async ()=>{
-//          try {
-//           const response = await fetch('https://dummyjson.com/posts')
-//           .then(res => res.json())
-//           .then(res=>res.posts);
-//           console.log(response);
-
-//           return response
-//         }
-//           catch (error) {
-//             console.log(error)
-//           }
-//         }
-//       })
-//       const deleteMutation = useMutation({
-//         mutationFn: async (postId) => {
-//             const response = await fetch(`https://dummyjson.com/posts/${postId}`, {
-//                 method: 'DELETE',
-//             });
-//             return response.json();
-//         },onSuccess: (data, postId) => {
-//           console.log(data);
-//           queryClient.setQueryData(['posts'], (curEle) => {
-//               return curEle.filter((post) => post.id !== postId);
-//           });
-//       },
-
-//     });
-
-//   return (
-//     <div>
-//       <h1>data</h1>
-// 				{/* {data?.map(({ title, id, body }) => (
-// 					<div key={id}>
-// 						<h1>{title}</h1>
-// 						<p>{body}</p>
-// 					</div>
-// 				))} */}
-//         {data?.map(({ title, id, body }) => (
-
-//          <Card key={id} style={{ width: '18rem' }}>
-
-//       <Card.Body>
-//       <Card.Subtitle className="mb-2 text-muted">{id}</Card.Subtitle>
-
-//         <Card.Title>{title}</Card.Title>
-//        <Card.Text>
-//           {body}
-//         </Card.Text>
-//         <button className="btn btn-primary" onClick={() => deleteMutation.mutate(id)}>Delete</button>
-
-//       </Card.Body>
-//     </Card>))}
-// 			</div>
-//   )
-// }
-
-// export default Post
 import { useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-// import { Button, Modal } from "bootstrap";
 import { useState } from "react";
-// import { Form } from "react-bootstrap";
-// import Card from "react-bootstrap/Card";
-// import Container from "react-bootstrap/Container";
+
 import { Button, Modal, Form, Card, Container } from 'react-bootstrap';
 
 const Post = () => {
@@ -146,22 +78,20 @@ const Post = () => {
   
   // Update mutation
   const updateMutation = useMutation({
-    mutationFn: async ({ postId, title, body }) => {
+    mutationFn: async ({postId,title,body}) => {
       const response = await fetch(`https://dummyjson.com/posts/${postId}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, body }),
+        body: JSON.stringify({title,body})
       });
       return response.json();
     },
-    onSuccess: (data,updatedPost) => {//updated post object returned by the API
-      console.log(data); 
-      queryClient.setQueryData(['posts'], (curEle) =>
-        curEle.map((post) => (post.id === updatedPost.id ? updatedPost : post))
-      );
+    onSuccess: (updatedPost) => {//updated post object returned by the API
+      queryClient.setQueryData(["posts"], (curEle) => {
+        return curEle.map((post) =>(post.id === updatedPost.id ? updatedPost : post));
+      });
     },
   });
-
   // Handle update button click
   const handleUpdate = (postId, currentTitle, currentBody) => {
     const newTitle = prompt('Enter the new title:', currentTitle);

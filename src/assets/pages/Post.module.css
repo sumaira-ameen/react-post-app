@@ -1,0 +1,43 @@
+.postContainer {
+  padding: 20px;
+}
+
+.customCard {
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.customCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.actionButtons {
+  margin-top: 15px;
+}
+
+.customButton {
+  margin: 0 5px;
+  padding: 8px 20px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.customButton:hover {
+  transform: translateY(-2px);
+}
+
+.modalHeader {
+  background-color: #f8f9fa;
+}
+
+.formLabel {
+  font-weight: 500;
+}
